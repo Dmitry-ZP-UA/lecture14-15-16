@@ -20,6 +20,7 @@ class HomeController extends Controller
      */
     public function __construct(Category $category)
     {
+       // $this->middleware('auth');
         $this->category = $category;
     }
 

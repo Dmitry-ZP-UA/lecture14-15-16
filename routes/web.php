@@ -11,7 +11,10 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+Auth::routes();
 
 Route::namespace('Front')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
@@ -20,3 +23,6 @@ Route::namespace('Front')->group(function () {
     Route::get("category/{slug}", 'CategoryController@getCategory')->name('front.category.slug');
     Route::get("{product}", 'ProductController@show')->name('front.get.product');
 });
+
+
+
