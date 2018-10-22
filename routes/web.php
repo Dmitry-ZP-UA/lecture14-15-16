@@ -19,7 +19,11 @@ Auth::routes();
 Route::namespace('Front')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
 
-    Route::resource('cart', 'CartController');
+    Route::get('/cart', 'CartController@index')->name('cart.index');
+    Route::post('/cart', 'CartController@store')->name('cart.store');
+    Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
+    Route::get('/cart/delete/{id}', 'CartController@delete')->name('cart.delete');
+
     Route::get("category/{slug}", 'CategoryController@getCategory')->name('front.category.slug');
     Route::get("{product}", 'ProductController@show')->name('front.get.product');
 });
