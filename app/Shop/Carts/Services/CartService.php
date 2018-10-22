@@ -94,4 +94,11 @@ class CartService
         if (!isset($this->cartCount)) $this->cartCount = $this->getCart()->sum();
         return $this->cartCount;
     }
+
+    public function deleteProductFromCart($id)
+    {
+        $this->cartCount -= $this->getCart()->get($id);
+        $this->getCart()->forget($id);
+        $this->saveCartChanges();
+    }
 }

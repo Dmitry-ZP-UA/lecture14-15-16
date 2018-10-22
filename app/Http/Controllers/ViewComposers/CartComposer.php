@@ -15,17 +15,13 @@ use Illuminate\View\View;
 class CartComposer
 {
     /**
-     * The categories repository implementation.
-     *
      * @var CartService
      */
     protected $cartService;
 
     /**
-     * Create a new cart composer.
-     *
-     * @param  CartService $categories
-     * @return void
+     * CartComposer constructor.
+     * @param CartService $service
      */
     public function __construct(CartService $service)
     {
@@ -33,10 +29,7 @@ class CartComposer
     }
 
     /**
-     * Bind data to the view.
-     *
-     * @param  View $view
-     * @return void
+     * @param View $view
      */
     public function compose(View $view)
     {
