@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::namespace('Front')->group(function () {
-    Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
+
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/exception', 'HomeController@Exception')->name('home');
 
     Route::get('/cart', 'CartController@index')->name('cart.index');
     Route::post('/cart', 'CartController@store')->name('cart.store');
@@ -26,6 +28,7 @@ Route::namespace('Front')->group(function () {
 
     Route::get("category/{slug}", 'CategoryController@getCategory')->name('front.category.slug');
     Route::get("{product}", 'ProductController@show')->name('front.get.product');
+
 });
 
 

@@ -34,4 +34,9 @@ class HomeController extends Controller
             'categories' => $categories
         ]);
     }
+
+    public function Exception()
+    {
+        abort(404);
+    }
 }
