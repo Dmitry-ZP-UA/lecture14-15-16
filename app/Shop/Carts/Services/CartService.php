@@ -54,6 +54,7 @@ class CartService
     public function getCart()
     {
         if (!isset($this->cart)) $this->cart = session('cart');
+
         return $this->cart;
     }
 
@@ -74,6 +75,7 @@ class CartService
                 $product = $this->product->where('id', $key)->first();
                 $cart->push(new ShoppingCart($key, $product->name, $value, $product->price));
             });
+
         return $cart;
     }
 
@@ -92,6 +94,7 @@ class CartService
     {
         if ($this->getCart() == null) $this->cartCount = 0;
         if (!isset($this->cartCount)) $this->cartCount = $this->getCart()->sum();
+
         return $this->cartCount;
     }
 

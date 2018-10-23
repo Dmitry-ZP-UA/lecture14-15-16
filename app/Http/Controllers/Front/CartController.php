@@ -27,6 +27,8 @@ final class CartController extends Controller
      */
     public function __construct(Product $product, CartService $cartService)
     {
+        $this->middleware('auth');
+
         $this->product = $product;
         $this->cartService = $cartService;
     }
@@ -51,6 +53,7 @@ final class CartController extends Controller
         $product = $this->product->where('id', $request->get('product'))->first();
         $quantity = $request->get('quantity');
         $this->cartService->addToCart($product, $quantity);
+
         return redirect()->route('cart.index');
     }
 
@@ -61,6 +64,7 @@ final class CartController extends Controller
     public function delete($id)
     {
         $this->cartService->deleteProductFromCart($id);
+
         return redirect()->route('cart.index');
     }
 
