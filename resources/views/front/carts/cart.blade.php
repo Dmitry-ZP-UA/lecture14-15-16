@@ -6,8 +6,8 @@
         <div class="row">
             <div class="col-md-12">
                 <ol class="breadcrumb">
-                    <li><a href="{{ route('home') }}"> <i class="fa fa-home"></i> Home</a></li>
-                    <li class="active">Cart</li>
+                    <li><a href="{{ route('home') }}"> <i class="fa fa-home"></i> {{ __('home.Home') }}</a></li>
+                    <li class="active">{{ __('cart.Cart') }}</li>
                 </ol>
             </div>
         </div>
@@ -21,11 +21,11 @@
                         <thead class="thead-dark">
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Total by product</th>
-                            <th>Delete</th>
+                            <th>{{ __('cart.Name') }}</th>
+                            <th>{{ __('cart.Quantity') }}</th>
+                            <th>{{ __('cart.Price') }}</th>
+                            <th>{{ __('cart.Total by product') }}</th>
+                            <th>{{ __('cart.Delete') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -52,7 +52,7 @@
                             </tr>
                         @else
                             <tr>
-                                <td colspan="5">Cart is empty</td>
+                                <td colspan="5">{{ __('cart.Cart is empty') }}</td>
                             </tr>
                         @endif
                         </tbody>
