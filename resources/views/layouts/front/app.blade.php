@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,19 +28,34 @@
             <div class="clearfix"></div>
             <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
-                    @if(auth()->check())
-                        <li><a href="#{{--{{ route('accounts', ['tab' => 'profile']) }}--}}"><i class="fa fa-home"></i> My Account</a></li>
-                        <li><a href="#{{--{{ route('logout') }}--}}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    @guest
+                        <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                        <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                     @else
-                        <li><a href="#{{--{{ route('login') }}--}}"> <i class="fa fa-lock"></i> Login</a></li>
-                        <li><a href="#{{--{{ route('register') }}--}}"> <i class="fa fa-sign-in"></i> Register</a></li>
-                    @endif
-                    <li id="cart" class="menubar-cart">
-                        <a href="{{ route('cart.index') }}" title="View Cart" class="awemenu-icon menu-shopping-cart">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <span class="cart-number">{{ $cartCount ?? 0 }}</span>
-                        </a>
-                    </li>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    @endguest
+                        <li id="cart" class="menubar-cart">
+                            <a href="{{ route('cart.index') }}" title="View Cart" class="awemenu-icon menu-shopping-cart">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <span class="cart-number">{{ $cartCount ?? 0 }}</span>
+                            </a>
+                        </li>
                 </ul>
             </div>
         </div>

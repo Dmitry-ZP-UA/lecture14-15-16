@@ -2,55 +2,45 @@
 
 namespace App\Shop\Carts;
 
-use Gloudemans\Shoppingcart\Cart;
-use Gloudemans\Shoppingcart\CartItem;
-
-class ShoppingCart extends Cart
+class ShoppingCart
 {
-    public static $defaultCurrency;
-
-    protected $session;
-
-    protected $event;
-
-    public function __construct()
-    {
-        $this->session = $this->getSession();
-        $this->event = $this->getEvents();
-        parent::__construct($this->session, $this->event);
-
-        self::$defaultCurrency = config('cart.currency');
-    }
-
-    public function getSession()
-    {
-        return app()->make('session');
-    }
-
-    public function getEvents()
-    {
-        return app()->make('events');
-    }
+    /**
+     * @var
+     */
+    public $id;
 
     /**
-     * Get the total price of the items in the cart.
-     *
-     * @param int $decimals
-     * @param string $decimalPoint
-     * @param string $thousandSeparator
-     * @param float $shipping
-     * @return string
+     * @var
      */
-    public function total($decimals = null, $decimalPoint = null, $thousandSeparator = null, $shipping = 0.00)
+    public $name;
+    /**
+     * @var
+     */
+    public $count;
+
+    /**
+     * @var
+     */
+    public $price;
+
+    /**
+     * @var
+     */
+    public $total;
+
+    /**
+     * ShoppingCart constructor.
+     * @param $id
+     * @param $name
+     * @param $count
+     * @param $price
+     */
+    public function __construct($id, $name, $count, $price)
     {
-        $content = $this->getContent();
-
-        $total = $content->reduce(function ($total, CartItem $cartItem) {
-            return $total + ($cartItem->qty * $cartItem->priceTax);
-        }, 0);
-
-        $grandTotal = $total + $shipping;
-
-        return number_format($grandTotal, $decimals, $decimalPoint, $thousandSeparator);
+        $this->id = $id;
+        $this->name = $name;
+        $this->count = $count;
+        $this->price = $price;
+        $this->total = $price * $count;
     }
 }
