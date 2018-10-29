@@ -28,9 +28,17 @@
             <div class="clearfix"></div>
             <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="nav-link" href="{{ route('setlocale', ['lang' => 'en']) }}">English</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{{ route('setlocale', ['lang' => 'ru']) }}">Русский</a>
+                    </li>
+
+
                     @guest
-                        <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                        <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                        <li><a class="nav-link" href="{{ route('login') }}">{{ __('auth.Login') }}</a></li>
+                        <li><a class="nav-link" href="{{ route('register') }}">{{ __('auth.Register') }}</a></li>
                     @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
