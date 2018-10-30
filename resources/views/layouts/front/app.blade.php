@@ -28,6 +28,11 @@
             <div class="clearfix"></div>
             <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
+
+                    <li>
+                        <a class="nav-link" href="{{ route('subscriptions.index') }}">Subscriptions</a>
+                    </li>
+
                     <li>
                         <a class="nav-link" href="{{ route('setlocale', ['lang' => 'en']) }}">English</a>
                     </li>
@@ -94,6 +99,10 @@
 
 <script src="{{ asset('js/front.min.js') }}"></script>
 <script src="{{ asset('js/custom.js') }}"></script>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script>
+    Stripe.setApiKey("{{ env('STRIPE_KEY') }}");
+</script>
 @yield('js')
 </body>
 </html>

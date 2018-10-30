@@ -25,7 +25,8 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
 
         Route::get('/', 'HomeController@index')->name('home');
         //Route::get('/exception', 'HomeController@Exception')->name('home');
-
+        Route::post('/subscriptions', 'SubscriptionsController@processSubscribe');
+        Route::get('/subscriptions', 'SubscriptionsController@index')->name('subscriptions.index');
         Route::get('/cart', 'CartController@index')->name('cart.index');
         Route::post('/cart', 'CartController@store')->name('cart.store');
         Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
@@ -54,7 +55,6 @@ Route::get('setlocale/{lang}', function ($lang) {
     return redirect($url);
 
 })->name('setlocale');
-
 
 
 
