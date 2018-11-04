@@ -20,6 +20,7 @@ class CreateCommentsTable extends Migration
             $table->unsignedInteger('parent_id')->nullable();
             $table->text('text');
             $table->unsignedInteger('product_id');
+            $table->unsignedInteger('likes_counter');
             $table->timestamps();
         });
     }

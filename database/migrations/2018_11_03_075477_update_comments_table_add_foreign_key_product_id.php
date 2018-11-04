@@ -16,6 +16,9 @@ class UpdateCommentsTableAddForeignKeyProductId extends Migration
         Schema::table('comments', function (Blueprint $table) {
             $table->foreign('product_id')->references('id')->on('products');
         });
+        Schema::table('comments', function (Blueprint $table) {
+            $table->foreign('parent_id')->references('id')->on('comments');
+        });
     }
 
     /**
@@ -27,6 +30,9 @@ class UpdateCommentsTableAddForeignKeyProductId extends Migration
     {
         Schema::table('comments', function (Blueprint $table) {
             $table->dropForeign('comments_product_id_foreign');
+        });
+        Schema::table('comments', function (Blueprint $table) {
+            $table->dropForeign('comments_parent_id_foreign');
         });
     }
 }

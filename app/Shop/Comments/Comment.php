@@ -21,7 +21,8 @@ class Comment extends Model
         'name',
         'email',
         'text',
-        'product_id'
+        'product_id',
+        'likes_counter'
     ];
 
     public function Product()

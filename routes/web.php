@@ -31,8 +31,12 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
         Route::get('/cart/delete/{id}', 'CartController@delete')->name('cart.delete');
 
         Route::get("category/{slug}", 'CategoryController@getCategory')->name('front.category.slug');
+        Route::post("{product}", 'ProductController@show')->name('front.get.product');
         Route::get("{product}", 'ProductController@show')->name('front.get.product');
-        Route::post("{product}", 'ProductController@AddToComment')->name('product.comment');
+        Route::post("{product}/addtocomments", 'ProductController@AddToComment')->name('product.comment');
+        Route::post("{product}/update", 'ProductController@update')->name('comment.update');
+
+
 
 
     });
