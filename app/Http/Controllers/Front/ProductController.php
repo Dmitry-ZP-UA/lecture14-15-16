@@ -37,6 +37,7 @@ class ProductController extends Controller
      */
     public function AddToComment(Request $request, $slug)
     {
+
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required',
@@ -62,12 +63,9 @@ class ProductController extends Controller
     {
         $product = $this->product->where('slug', $slug)->first();
 
-        if(isset($request->likes_counter))
-        {
-            $comment = $this->comment->where('id', $request->id)->first();
-            $comment->likes_counter = $request->likes_counter;
-            $comment->save();
-        }
+        $comment = $this->comment->where('id', $request->id)->first();
+        $comment->likes_counter = $request->likes_counter;
+        $comment->save();
 
         return redirect()->route('front.get.product',[
             'product' => $product->slug,
@@ -85,7 +83,6 @@ class ProductController extends Controller
        $comments = $this->comment->where('product_id', $product->id)
            ->orderBy('id', 'desc')
            ->get();
-
 
         return view('front.products.product', [
             'product' => $product,
