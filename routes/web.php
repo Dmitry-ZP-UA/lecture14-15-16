@@ -23,22 +23,25 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
 
     Route::namespace('Front')->group(function () {
 
+        Route::post("/search", 'ProductController@search')->name('search.product');
+
         Route::get('/', 'HomeController@index')->name('home');
         //Route::get('/exception', 'HomeController@Exception')->name('home');
+
         Route::get('/cart', 'CartController@index')->name('cart.index');
         Route::post('/cart', 'CartController@store')->name('cart.store');
         Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
         Route::get('/cart/delete/{id}', 'CartController@delete')->name('cart.delete');
 
+
         Route::get("category/{slug}", 'CategoryController@getCategory')->name('front.category.slug');
+
         Route::post("{product}", 'ProductController@show')->name('front.get.product');
         Route::get("{product}", 'ProductController@show')->name('front.get.product');
-        Route::post("{product}/addtocomments", 'ProductController@AddToComment')->name('product.comment');
+
+        Route::post("{product}/like_up", 'ProductController@show')->name('sort.product');
+        Route::post("{product}/addtocomments", 'ProductController@addComment')->name('product.comment');
         Route::post("{product}/update", 'ProductController@update')->name('comment.update');
-
-
-
-
     });
 
 });

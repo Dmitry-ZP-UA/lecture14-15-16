@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Controllers\ViewComposers\CartComposer;
+use App\Http\Controllers\ViewComposers\ProductComposer;
 use App\Http\ViewComposers\CategoriesComposer;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;

@@ -32,19 +32,19 @@
         </div>
     </div>
 
-{{--<form action ="#" method="post">--}}
-    {{--@csrf--}}
-    {{--<p>Сортировать по: </p>--}}
-    {{--<div class="form-group">--}}
-        {{--<div>--}}
-            {{--<select name="sort">--}}
-                {{--<option name ="sort" value="date">Дате</option>--}}
-                {{--<option name ="sort" value="like">Лайкам</option>--}}
-            {{--</select>--}}
-            {{--<button type="submit" class="btn btn-primary">Submit</button>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-{{--</form>--}}
+<form action =" {{ route('sort.product', $product->slug) }}" id="data" method="post">
+    @csrf
+    <p>Сортировать по: </p>
+    <div class="form-group">
+        <div>
+            <select name="sort" form="data">
+                <option value="date">Дате</option>
+                <option value="like">Лайкам</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
 
 @foreach($comments as $parentcomment)
     @if ($parentcomment->parent_id === null)

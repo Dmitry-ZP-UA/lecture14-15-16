@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Services\Searcher\ProductSearcher;
 use App\Shop\Comments\Comment;
 use App\Shop\Products\Product;
 use App\Shop\Products\Transformations\ProductTransformable;
@@ -19,15 +20,17 @@ class ProductController extends Controller
 
     private $comment;
 
+    private $searcher;
     /**
      * ProductController constructor.
      * @param Product $product
      * @param Comment $comment
      */
-    public function __construct(Product $product, Comment $comment)
+    public function __construct(Product $product, Comment $comment, ProductSearcher $searcher)
     {
         $this->comment = $comment;
         $this->product = $product;
+        $this->searcher = $searcher;
     }
 
     /**
@@ -35,7 +38,7 @@ class ProductController extends Controller
      * @param $slug
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function AddToComment(Request $request, $slug)
+    public function addComment(Request $request, $slug)
     {
 
         $this->validate($request, [
@@ -72,21 +75,37 @@ class ProductController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search(Request $request)
+    {
+        $products = $this->searcher->search($request->search);
+
+        return view('front.products.product-search', [
+            'products' => $products,
+        ]);
+
+    }
+
 
     /**
      * @param $slug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
-       $product = $this->product->where('slug', $slug)->first();
-       $comments = $this->comment->where('product_id', $product->id)
-           ->orderBy('id', 'desc')
-           ->get();
+        $product = $this->product->where('slug', $slug)->first();
+
+        $comments = $this->comment->where('product_id', $product->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
 
         return view('front.products.product', [
             'product' => $product,
-            'comments' => $comments,
+             'comments' => $comments,
         ]);
     }
 
