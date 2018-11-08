@@ -2,7 +2,7 @@
     <div id="myModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action=" {{ route('product.comment', $product->slug) }}" method="post">
+                <form action=" {{ route('comment.create') }}" method="post">
                     @csrf
                     <div style="display: flex">
                         @guest
@@ -32,26 +32,12 @@
         </div>
     </div>
 
-<form action =" {{ route('sort.product', $product->slug) }}" id="data" method="post">
-    @csrf
-    <p>Сортировать по: </p>
-    <div class="form-group">
-        <div>
-            <select name="sort" form="data">
-                <option value="date">Дате</option>
-                <option value="like">Лайкам</option>
-            </select>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </div>
-</form>
-
 @foreach($comments as $parentcomment)
     @if ($parentcomment->parent_id === null)
         <div class="alert alert-info">
             <h2>{{ $parentcomment->name }}</h2>
             <p>{{ $parentcomment->text }}</p>
-            <form action=" {{ route('comment.update', $product->slug) }}" method="post">
+            <form action=" {{ route('comment.update') }}" method="post">
                 @csrf
                 <input type="hidden" name="likes_counter" value="{{ $parentcomment->likes_counter + 1 }}">
                 <input type="hidden" name="id" value="{{ $parentcomment->id }}">
@@ -61,7 +47,7 @@
             <div id="myModalChild" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action=" {{ route('product.comment', $product->slug) }}" method="post">
+                        <form action=" {{ route('comment.create', $product->slug) }}" method="post">
                             @csrf
                             <div style="display: flex">
                                 @guest
@@ -99,7 +85,7 @@
             <div class="alert alert-info" style="margin-left: 100px;">
                 <h2>{{ $commentchild->name }}</h2>
                 <p>{{ $commentchild->text }}</p>
-                <form action=" {{ route('comment.update', $product->slug) }}" method="post">
+                <form action=" {{ route('comment.update') }}" method="post">
                     @csrf
                     <input type="hidden" name="likes_counter" value="{{ $commentchild->likes_counter + 1 }}">
                     <input type="hidden" name="id" value="{{ $commentchild->id }}">
