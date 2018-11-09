@@ -7,9 +7,7 @@ use App\Services\Searcher\ProductSearcher;
 use App\Shop\Comments\Comment;
 use App\Shop\Products\Product;
 use App\Shop\Products\Transformations\ProductTransformable;
-
-
-
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -39,12 +37,12 @@ class ProductController extends Controller
      * @param $slug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($slug)
+    public function show($slug, Request $request)
     {
         $product = $this->product->where('slug', $slug)->first();
 
         $comments = $this->comment->where('product_id', $product->id)
-            ->orderBy('created_at', 'desc')
+            ->orderBy($request->sort ?: 'created_at', 'desc')
             ->get();
 
         return view('front.products.product', [

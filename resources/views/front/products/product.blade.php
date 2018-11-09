@@ -21,6 +21,16 @@
             </div>
         </div>
         @include('layouts.front.product')
+
+        <form action=" {{ route('front.get.product', $product->slug) }}" method="post" id="sort">
+            @csrf
+            <select name="sort" form="sort">
+                <option value="likes_counter">likes up</option>
+                <option value="created_at">date up</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
         @include('layouts.front.comments')
     @endsection
 
