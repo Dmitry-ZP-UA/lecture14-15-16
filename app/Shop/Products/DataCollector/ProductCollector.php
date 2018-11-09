@@ -2,59 +2,56 @@
 
 namespace App\Shop\Products\DataCollector;
 
-use App\Services\Filters\Contract\FilterInterface;
-use App\Services\Filters\Factory as FilterFactory;
+use App\Services\Filters\Contract\SorterInterface;
+use App\Services\Filters\Exceptions\FilterBuildingException;
+use App\Services\Filters\Factory as SorterFactory;
 use App\Shop\Products\Product;
+use Illuminate\Support\Collection;
 
+/**
+ * Class CategoryCollector
+ * @package App\Shop\Category\DataCollerctor
+ */
 class ProductCollector
 {
-    const FILTER_ALIAS = 'product_filter';
+    const FILTER_ALIAS = 'sorter-product';
 
     /**
-     * @var FilterFactory
+     * @var
      */
-    private $filterFactory;
+    private $sorterFactory;
 
     /**
-     * @var Product
+     * ProductCollector constructor.
+     * @param SorterFactory $sorterFactory
      */
-    private $product;
-
-    /**
-     * CategoryCollector constructor.
-     * @param FilterFactory $filterFactory
-     * @param Product $product
-     */
-    public function __construct(FilterFactory $filterFactory, Product $product)
+    public function __construct(SorterFactory $sorterFactory)
     {
-        $this->filterFactory = $filterFactory;
-        $this->product = $product;
+        $this->sorterFactory = $sorterFactory;
     }
 
     /**
      * @return Product[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
      */
-    public function collect()
+    public function collect(bool $sortAsc, Collection $products)
     {
-        $categories = $this->getProducts();
-            $filter = $this->getFilter();
-            return $filter->filter($categories);
+        try {
+            $sorter = $this->getSorter();
+            return $sorter->sorter($products, $sortAsc);
+        } catch (FilterBuildingException $exception) {
+            return $products;
+        }
     }
 
     /**
-     * @return FilterInterface
+     * @return SorterInterface
+     * @throws \App\Services\Filters\Exceptions\FilterBuildingException
      */
-    private function getFilter(): FilterInterface
+    private function getSorter(): SorterInterface
     {
-        return $this->filterFactory->buildFilter(self::FILTER_ALIAS);
+        return $this->sorterFactory->buildSorter(self::FILTER_ALIAS);
+
     }
 
-    /**
-     * @return Product[]|\Illuminate\Database\Eloquent\Collection
-     */
-    private function getProducts()
-    {
-        return $this->product->get();
-    }
 
 }

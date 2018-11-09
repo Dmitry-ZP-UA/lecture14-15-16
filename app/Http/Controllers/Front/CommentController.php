@@ -22,7 +22,11 @@ class CommentController extends Controller
         $this->comments = $comments;
     }
 
-
+    /**
+     * @param AddCommentsRequest $request
+     * @param ProductComment $comment
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function addComment(AddCommentsRequest $request, ProductComment $comment)
     {
         $comment->create($request->all());
@@ -31,6 +35,11 @@ class CommentController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @param ProductComment $comment
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateComment(Request $request, ProductComment $comment)
     {
         $comment->update($request);

@@ -3,6 +3,7 @@
 namespace App\Services\Searcher;
 
 use App\Shop\Products\Product;
+use Illuminate\Support\Collection;
 
 class ProductSearcher
 {
@@ -24,7 +25,7 @@ class ProductSearcher
      * @param string $param
      * @return mixed
      */
-    public function search(string $param)
+    public function search(string $param) :Collection
     {
         return $this->searchProductByName($param);
     }
@@ -35,11 +36,10 @@ class ProductSearcher
      */
     private function searchProductByName(string $param)
     {
-        $product = $this->product->where([
+        return $product = $this->product->where([
             ['name', 'LIKE', '%' . $param . '%']
-        ])->get();
+        ])->with(['category'])->get();
 
-        return $product;
     }
 
 }

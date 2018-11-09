@@ -2,7 +2,11 @@
 
 namespace App\Services\Container;
 
-class Container
+/**
+ * Class Container
+ * @package App\Services\Container
+ */
+final class Container implements ContainerInterface
 {
     /**
      * @param string $classname
@@ -12,5 +16,4 @@ class Container
     {
         return resolve($classname);
     }
-
 }

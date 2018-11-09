@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dmitry
- * Date: 08.11.18
- * Time: 13:04
- */
 
 namespace App\Services\Filters\Contract;
 
-
+/**
+ * Interface CompositeInterface
+ * @package App\Services\Filters\Contract
+ */
 interface CompositeInterface
 {
-    public function addFilter(FilterInterface $filter);
+    /**
+     * @param SorterInterface $filter
+     * @return mixed
+     */
+    public function addSorter(SorterInterface $filter);
 }

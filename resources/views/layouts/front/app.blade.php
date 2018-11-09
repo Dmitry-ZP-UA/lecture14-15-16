@@ -32,7 +32,7 @@
                         <form class="navbar-form navbar-left" method="post" action="{{ route('search.product') }}">
                             @csrf
                             <div class="form-group">
-                                <input type="text" name="search" class="form-control" placeholder="Search">
+                                <input type="text" name="search" required class="form-control" placeholder="Search">
                             </div>
                             <button type="submit" class="btn btn-default">Submit</button>
                         </form>
