@@ -9,10 +9,10 @@ return [
         'sorter-product' => [
             'sorter' => \App\Services\Filters\CompositeSorter::class,
             'items' => [
-                \App\Shop\Products\Sorters\ByCategoryNameSort::class,
-                \App\Shop\Products\Sorters\ByPriceLow::class,
+               // \App\Shop\Products\Sorters\ByCategoryNameSort::class,
+                //\App\Shop\Products\Sorters\ByPriceLow::class,
             ]
-        ],
+        ]
     ]
 ];
 

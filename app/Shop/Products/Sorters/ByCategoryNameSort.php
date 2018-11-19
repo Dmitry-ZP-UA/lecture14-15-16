@@ -12,7 +12,7 @@ class ByCategoryNameSort extends Sorter
     function getAlgorithm(): callable
     {
         return function (Product $product) {
-            return $product->category_id;
+            return $product->category->name;
         };
     }
 

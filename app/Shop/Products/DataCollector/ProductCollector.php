@@ -52,6 +52,4 @@ class ProductCollector
         return $this->sorterFactory->buildSorter(self::FILTER_ALIAS);
 
     }
-
-
 }
