@@ -22,13 +22,14 @@ class ProductSearcher
      * @var
      */
     private $cache;
+
     /**
      * ProductSearcher constructor.
      * @param Product $product
      */
-    public function __construct(Product $product, Cache $cache)
+    public function __construct(Product $product, Cache $cache, Elastic $client)
     {
-        $this->client = app(Elastic::class);
+        $this->client = $client;
         $this->product = $product;
         $this->cache = $cache;
     }
@@ -39,27 +40,14 @@ class ProductSearcher
      */
     public function search(string $param): Collection
     {
-        if($this->cache->getCache($param)){
+        if(($this->cache->getCache($param)->isNotEmpty())){
             return $this->cache->getCache($param);
         }
 
-        $result = $this->searchProductByName($param);
-        $this->cache->setCache($param, collect($result));
+        $result = $this->elasticSearch($param);
+        $this->cache->setCache($param, $result);
 
         return collect($result);
-       // return $this->elasticSearch($param);
-    }
-
-    /**
-     * @param string $param
-     * @return mixed
-     */
-    private function searchProductByName(string $param)
-    {
-        return $product = $this->product->where([
-            ['name', 'LIKE', '%' . $param . '%']
-        ])->with(['category'])->get();
-
     }
 
     /**
@@ -79,10 +67,13 @@ class ProductSearcher
         $params = $this->getParams($query);
 
         $results = $this->client->search($params);
-        dd($results);
+        $res = array();
 
-        return $results;
+        foreach ($results['hits']['hits'] as $value) {
+            array_push($res, $value["_id"]);
+        }
 
+        return $this->product->whereIn('id', $res)->get();
     }
 
     /**
@@ -98,7 +89,6 @@ class ProductSearcher
             ]
         ];
     }
-
 
 
 }
