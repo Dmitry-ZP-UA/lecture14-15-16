@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Front;
 
 use App\Services\Searcher\ProductSearcher;
 use App\Shop\Products\DataCollector\ProductCollector;
+use Doctrine\Common\Cache\RedisCache;
 use Illuminate\Http\Request;
+use Elasticsearch\ClientBuilder;
+use Illuminate\Support\Facades\Redis;
 
 class SearchController
 {

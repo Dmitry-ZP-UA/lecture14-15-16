@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CategorySeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,17 +12,26 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert([
+        DB::table('products')->insert([
             [
-                'name' => 'Category 1',
-                'slug' => 'category_1',
-                'description' => 'Some category description',
+                'name' => 'Product 1',
+                'category_id' => 1,
+                'slug' => 'product-1',
+                'description' => 'Some product1 description',
+                'price' => 100,
+                'quantity' => 100,
+                'status' => 1
             ],
             [
-                'name' => 'Category 2',
-                'slug' => 'category_2',
-                'description' => 'Another category description',
+                'name' => 'Product 2',
+                'category_id' => 2,
+                'slug' => 'product-2',
+                'description' => 'Some product2 description',
+                'price' => 200,
+                'quantity' => 200,
+                'status' => 1
             ],
+
         ]);
     }
 }
