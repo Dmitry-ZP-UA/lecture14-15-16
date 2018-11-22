@@ -29,6 +29,15 @@
             <div class="pull-right">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
+                        <form class="navbar-form navbar-left" method="post" action="{{ route('search.product') }}">
+                            @csrf
+                            <div class="form-group">
+                                <input type="text" name="search" required class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                    </li>
+                    <li>
                         <a class="nav-link" href="{{ route('setlocale', ['lang' => 'en']) }}">English</a>
                     </li>
                     <li>
@@ -90,7 +99,7 @@
 </section>
 @yield('content')
 
-@include('layouts.front.footer')
+{{--@include('layouts.front.footer')--}}
 
 <script src="{{ asset('js/front.min.js') }}"></script>
 <script src="{{ asset('js/custom.js') }}"></script>

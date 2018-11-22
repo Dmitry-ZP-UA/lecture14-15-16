@@ -23,6 +23,8 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
 
     Route::namespace('Front')->group(function () {
 
+        Route::post("/search", 'SearchController@search')->name('search.product');
+
         Route::get('/', 'HomeController@index')->name('home');
         //Route::get('/exception', 'HomeController@Exception')->name('home');
 
@@ -31,9 +33,14 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
         Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
         Route::get('/cart/delete/{id}', 'CartController@delete')->name('cart.delete');
 
+
         Route::get("category/{slug}", 'CategoryController@getCategory')->name('front.category.slug');
+
+        Route::post("{product}", 'ProductController@show')->name('front.get.product');
         Route::get("{product}", 'ProductController@show')->name('front.get.product');
 
+        Route::post("/comment/create", 'CommentController@addComment')->name('comment.create');
+        Route::post("/comment/update", 'CommentController@updateComment')->name('comment.update');
     });
 
 });
