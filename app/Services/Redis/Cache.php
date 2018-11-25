@@ -8,8 +8,6 @@
 
 namespace App\Services\Redis;
 
-
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
 
 
@@ -18,26 +16,25 @@ class Cache
 
     /**
      * @param string $param
-     * @return null
+     * @return mixed
      */
-    public function getCache($param) :Collection
+    public function getCache(string $param)
     {
-        $result = json_decode(Redis::get($param), true);
+        $data = Redis::get($param);
+        $result = json_decode($data);
 
-        return collect($result);
+        return $result;
 
     }
 
     /**
-     * @param $param
-     * @param $result
+     * @param $key
+     * @param $value
      */
-    public function setCache($param, Collection $collect)
+    public function setCache(string $key, $value)
     {
-        $result = json_encode($collect);
-
-        Redis::set($param, $result);
-        Redis::expire($param, 1000);
+        Redis::set($key, $value);
+        Redis::expire($key, 1000);
     }
 
 

@@ -3,22 +3,22 @@
 namespace App\Http\ViewComposers;
 
 use App\Shop\Categories\Category;
+use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
 use Illuminate\View\View;
 
 class CategoriesComposer
 {
     /**
-     * @var Category
+     * @var CategoryRepositoryInterface
      */
-    protected $category;
-
+    protected $categoryRepository;
     /**
      * CategoriesComposer constructor.
      * @param Category $category
      */
-    public function __construct(Category $category)
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
     {
-        $this->category = $category;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -26,7 +26,7 @@ class CategoriesComposer
      */
     public function compose(View $view)
     {
-        $categories = $this->category->with(['images', 'subCategories'])->parent()->get();
+        $categories = $this->categoryRepository->listCategories();
 
         $view->with('categories', $categories);
     }
