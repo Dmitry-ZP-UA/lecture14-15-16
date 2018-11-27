@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Shop\Categories\Category;
+use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
 {
@@ -13,27 +14,31 @@ class CategoryController extends Controller
     private $category;
 
     /**
+     * @var
+     */
+    private $categoryRepository;
+
+    /**
      * CategoryController constructor.
      *
      * @param Category $category
      */
-    public function __construct(Category $category)
+    public function __construct(Category $category, CategoryRepositoryInterface $categoryRepository)
     {
+        $this->categoryRepository = $categoryRepository;
         $this->category = $category;
     }
 
     /**
      * Find the category via the slug
-     *
      * @param string $slug
-     *
      * @return Category
      */
     public function getCategory(string $slug)
     {
-        $categories = $this->category->with(['products'])->get();
-        $parentCategories = $categories->where('parent_id', null);
-        $category = $categories->where('slug', $slug)->first();
+        $parentCategories = $this->categoryRepository->parentCategories();
+
+        $category = $this->categoryRepository->findCategoryBySlug($slug);
 
         return view('front.categories.category', [
             'categories' => $parentCategories,
